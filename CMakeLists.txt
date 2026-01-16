@@ -25,7 +25,9 @@ endif()
 if (IMGUI_BACKEND_OPENGL3)
     list(APPEND IMGUI_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/backends/imgui_impl_opengl3.cpp")
     list(APPEND IMGUI_HEADERS "${CMAKE_CURRENT_SOURCE_DIR}/backends/imgui_impl_opengl3.h")
-    list(APPEND IMGUI_LIBS OpenGL::GL)
+
+    ntt_find_package(ntt-glew "Dependencies")
+    list(APPEND IMGUI_LIBS ntt-glew)
 endif()
 
 if (IMGUI_BACKEND_VULKAN)
