@@ -14,19 +14,24 @@ file(
     "${CMAKE_CURRENT_SOURCE_DIR}/*.h"
 )
 
+set(IMGUI_LIBS)
+
 if (IMGUI_BACKEND_GLFW)
     list(APPEND IMGUI_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/backends/imgui_impl_glfw.cpp")
     list(APPEND IMGUI_HEADERS "${CMAKE_CURRENT_SOURCE_DIR}/backends/imgui_impl_glfw.h")
+    list(APPEND IMGUI_LIBS glfw)
 endif()
 
 if (IMGUI_BACKEND_OPENGL3)
     list(APPEND IMGUI_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/backends/imgui_impl_opengl3.cpp")
     list(APPEND IMGUI_HEADERS "${CMAKE_CURRENT_SOURCE_DIR}/backends/imgui_impl_opengl3.h")
+    list(APPEND IMGUI_LIBS OpenGL::GL)
 endif()
 
 if (IMGUI_BACKEND_VULKAN)
     list(APPEND IMGUI_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/backends/imgui_impl_vulkan.cpp")
     list(APPEND IMGUI_HEADERS "${CMAKE_CURRENT_SOURCE_DIR}/backends/imgui_impl_vulkan.h")
+    list(APPEND IMGUI_LIBS Vulkan::Vulkan)
 endif()
 
 if (IMGUI_BACKEND_WIN32)
@@ -51,4 +56,10 @@ target_include_directories(
     PUBLIC
     "${CMAKE_CURRENT_SOURCE_DIR}/backends"
     "${CMAKE_CURRENT_SOURCE_DIR}"
+)
+
+target_link_libraries(
+    ${PROJECT_NAME}
+    PUBLIC
+    ${IMGUI_LIBS}
 )
